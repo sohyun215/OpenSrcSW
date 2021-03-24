@@ -13,13 +13,13 @@ public class kuir {
 	public static void main(String[] args) throws ParserConfigurationException, TransformerException, SAXException, IOException {
 		// TODO Auto-generated method stub
 
-		if (args[1].equals("-c")) {
+		if (args[0].equals("-c")) {
 			makeCollection collection = new makeCollection();
-			collection.makeCollection(args[2]);
+			collection.makeCollection(args[1]);
 		}
-		if(args[1].equals("-k")) {
+		if(args[0].equals("-k")) {
 			makeKeyword kwrd=new makeKeyword();
-			kwrd.makeIndex(args[2]);
+			kwrd.makeIndex(args[1]);
 		}
 	}
 
