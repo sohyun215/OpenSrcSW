@@ -33,7 +33,7 @@ public class searcher {
 			Keyword kwrd = kl.get(j);
 			kwrdMap.put(kwrd.getString(), (double) 1); // query의 keyword와 weight저장
 		}
-		printTitle(CalcSim(query, file));
+		printTitle(InnerProduct(query, file));
 	}
 
 	HashMap<Integer, String> findTitle() throws ParserConfigurationException, SAXException, IOException {
@@ -58,7 +58,7 @@ public class searcher {
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	HashMap<Integer, Double> CalcSim(String query, String file)
+	HashMap<Integer, Double> InnerProduct(String query, String file)
 			throws ClassNotFoundException, IOException, ParserConfigurationException, SAXException {
 
 		FileInputStream fileIStream = new FileInputStream(file);
