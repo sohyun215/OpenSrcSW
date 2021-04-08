@@ -7,7 +7,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+<<<<<<< HEAD
 
+=======
+>>>>>>> feature
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -22,7 +25,13 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class searcher {
+<<<<<<< HEAD
 	HashMap<String, Double> kwrdMap = new HashMap<>();
+=======
+
+	HashMap<String, Double> kwrdMap = new HashMap<>();
+
+>>>>>>> feature
 	searcher(String file, String query)
 			throws ClassNotFoundException, IOException, ParserConfigurationException, SAXException {
 
@@ -35,7 +44,10 @@ public class searcher {
 		printTitle(CalcSim(query, file));
 	}
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> feature
 	HashMap<Integer, String> findTitle() throws ParserConfigurationException, SAXException, IOException {
 		String xmlFilepath = "collection.xml";
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -56,6 +68,7 @@ public class searcher {
 		}
 		return title;
 	}
+<<<<<<< HEAD
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	HashMap<Integer, Double> CalcSim(String query, String file){
 		
@@ -63,6 +76,69 @@ public class searcher {
 		
 	}
 	
+=======
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	HashMap<Integer, Double> CalcSim(String query, String file)
+			throws ClassNotFoundException, IOException, ParserConfigurationException, SAXException {
+
+		FileInputStream fileIStream = new FileInputStream(file);
+		ObjectInputStream objectInputStream = new ObjectInputStream(fileIStream);
+
+		Object object = objectInputStream.readObject();
+		objectInputStream.close();
+		HashMap hashMap = (HashMap) object;
+		int docsize = findTitle().size(); // 문서 개수
+		ArrayList<String> val = new ArrayList<>(); 
+		HashMap<String, ArrayList> idMap = new HashMap<>(); //id, 문서에 있는 query의 가중치 저장
+
+		for (String key : kwrdMap.keySet()) {
+			val = (ArrayList<String>) hashMap.get(key); // post파일에서 query와 대응하는 id,가중치 가져옴
+			for (int j = 0; j < docsize;) {
+				for (int i = 0; i < val.size(); j++, i += 2) {
+					ArrayList<String> weight = new ArrayList<>();
+					if (val.contains(Integer.toString(j))) {
+						if (idMap.containsKey(val.get(i))) {
+							idMap.get(val.get(i)).add(val.get(i + 1));
+						} 
+						else {
+							weight.add(val.get(i + 1));
+							idMap.put(val.get(i), weight);
+						}
+					} 
+					else { //문서 속 query의 keyword가 없는 경우 가중치 0으로 
+						if (idMap.containsKey(Integer.toString(j))) {
+							idMap.get(Integer.toString(j)).add("0");
+						} else {
+							weight.add("0");
+							idMap.put(Integer.toString(j), weight);
+							
+						}
+					}
+				}
+
+			}
+		}
+
+		HashMap<Integer, Double> simMap = new HashMap<>();
+		double[] temp = new double[docsize];
+		ArrayList<Double> wq = new ArrayList<>();
+		for (String key : kwrdMap.keySet()) {
+			wq.add(kwrdMap.get(key));
+		}
+		for (int i = 0; i < idMap.size(); i++) {
+			for (int j = 0; j < idMap.get(Integer.toString(i)).size(); j++) {
+				temp[i] += wq.get(j) * Double.parseDouble((String) idMap.get(Integer.toString(i)).get(j));
+			}
+			temp[i]= Math.round(temp[i] * 100) / 100.0; //소수점 셋째자리에서 반올림
+			simMap.put(i, temp[i]);
+		}
+
+		return simMap;
+
+	}
+
+>>>>>>> feature
 	@SuppressWarnings("rawtypes")
 	void printTitle(HashMap<Integer, Double> simMap) throws ParserConfigurationException, SAXException, IOException {
 		HashMap title = findTitle();
@@ -73,4 +149,8 @@ public class searcher {
 		}
 
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> feature
 }

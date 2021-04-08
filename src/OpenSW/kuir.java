@@ -25,6 +25,10 @@ public class kuir {
 			indexer indexer=new indexer();
 			indexer.makeInvertedFile(args[1]);
 		}
+		if(args[0].equals("-s") && args[2].equals("-q")) {
+			searcher searcher=new searcher(args[1], args[3]);
+	
+		}
 	}
 
 }
