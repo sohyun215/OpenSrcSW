@@ -1,6 +1,8 @@
 package week15;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -20,10 +22,18 @@ import org.json.simple.parser.ParseException;
 
 public class movieAPI {
 
-	public static void main(String[] args) throws ParseException {
-        String clientId = "WZxAyrohO5MdFgSIQcKW"; //애플리케이션 클라이언트 아이디값"
-        String clientSecret = "jGcPSG_MJY"; //애플리케이션 클라이언트 시크릿값"
+	public static void main(String[] args) throws ParseException, FileNotFoundException {
+		String clientId=null; //애플리케이션 클라이언트 아이디값"
+		String clientSecret=null;//애플리케이션 클라이언트 시크릿값"
 
+		//API_KEY.txt에 저장해놓은 아이디값과 시크릿값 가져옴
+		File file=new File("API_KEY.txt");
+        Scanner fscan=new Scanner(file);
+        while(fscan.hasNextLine()) {
+        	clientId=fscan.nextLine();
+        	clientSecret=fscan.nextLine();
+        }
+	
         System.out.print("검색어를 입력하세요: ");
         Scanner scan=new Scanner(System.in);
         String movie=scan.nextLine();
